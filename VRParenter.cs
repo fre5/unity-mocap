@@ -1,15 +1,15 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class VRParenter : MonoBehaviour
 {
-    public GameObject headref;
-    public GameObject leftHandref;
-    public GameObject rightHandref;
-    public Vector3 head;
-    public Vector3 leftHand;
-    public Vector3 rightHand;
+    public GameObject headref;      //attach to a head reference 
+    public GameObject leftHandref;  //attach to a left hand reference
+    public GameObject rightHandref; //attach to a right hand reference
+    public Vector3 head;            //head transform controller
+    public Vector3 leftHand;        //left hand transform controller
+    public Vector3 rightHand;       //right hand transform controller
 
 
 
@@ -33,7 +33,7 @@ public class VRParenter : MonoBehaviour
         
 
 
-        if(Input.GetKeyUp(KeyCode.I))
+        if(Input.GetKeyUp(KeyCode.I))       // I keypress will toggle control 
         {
             charControl.enabled = !charControl.enabled;
             charControlVR.enabled = !charControlVR.enabled;

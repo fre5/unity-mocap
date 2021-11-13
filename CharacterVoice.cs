@@ -9,20 +9,11 @@ public class CharacterVoice : MonoBehaviour {
     public AudioSource audioSource2;
 
     public float updateStep = 0.1f;
-
     public int sampleDataLength = 1024;
-
     private float currentUpdateTime = 0f;
-
     public float clipLoudness;
-
     private float[] clipSampleData;
-
     public bool liveMicrophoneInput;
-
-
-
-
 
     void Awake()
     {
@@ -31,41 +22,28 @@ public class CharacterVoice : MonoBehaviour {
             Debug.Log("Error : No Audio Source");
         }
 
-        clipSampleData = new float[sampleDataLength];
-
-        
-
-        
+        clipSampleData = new float[sampleDataLength];        
     }
-
-
 
     void Start()
     {
-        
-
-
         if (liveMicrophoneInput)
         {
-
             LiveMic();
         }
     }
 
     void LiveMic()
     {
-        
         audioSource1.clip = null;
-
+        
         foreach (var device in Microphone.devices)
         {
             Debug.Log("Name: " + device);
         }
-
+        
         audioSource1 = GetComponent<AudioSource>();
-
         audioSource1.clip = Microphone.Start(Microphone.devices[0], true, 1, 48000);
-
         audioSource1.loop = true;
         while (!(Microphone.GetPosition(null) > 0)) {  }
         audioSource1.Play();
@@ -73,24 +51,18 @@ public class CharacterVoice : MonoBehaviour {
 
     void Update()
     {
-
-        
-
         //plays the audioclip
         if (Input.GetKeyUp(KeyCode.S))
         {
             
-                liveMicrophoneInput = false;
-            
-            
+            liveMicrophoneInput = false;
             audioSource1.Play();
-
             if(audioSource2 != null)
             {
                 audioSource2.Play();
             }
-            
         }
+        
         if(Input.GetKeyUp(KeyCode.X))
         {
             audioSource1.Stop();
@@ -99,12 +71,8 @@ public class CharacterVoice : MonoBehaviour {
                 audioSource2.Stop();
             }
             LiveMic();
-            liveMicrophoneInput = true;
-            
+            liveMicrophoneInput = true;            
         }
-
-
-
 
         if(audioSource1.clip != null)
         {
@@ -123,9 +91,6 @@ public class CharacterVoice : MonoBehaviour {
             }
             //Debug.Log(clipLoudness);
             //Debug.Log(audioSource.timeSamples);
-
-
         }
-        
     }
 }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-
 //Enables control of a Camera using a Standard Two Axis Game Controller and Keyboard Shortcuts. 
 
     //v.0.2.8
@@ -100,10 +99,6 @@ public class CameraControllerMX : MonoBehaviour {
     //THE BIG OL' START
     void Start()
     {
-
-        
-
-
         rb = GetComponent<Rigidbody>();
         cam = GetComponent<Camera>();
 
@@ -111,14 +106,12 @@ public class CameraControllerMX : MonoBehaviour {
         initCameraPos = transform.position;
         initOrthographicSize = cam.orthographicSize;
 
-
-        if(cam.orthographic == true)
+        if (cam.orthographic == true)
         {
-            
-
             translationSpeed = tSpeedOrtho;
             rotationSpeed = rSpeedOrtho;
         }
+        
         if (cam.orthographic == false)
         {
             
@@ -156,7 +149,6 @@ public class CameraControllerMX : MonoBehaviour {
         leftBumpers = Input.GetButton("LeftBumper");
         rightBumpers = Input.GetButton("RightBumper");
 
-        //
         triggers = Input.GetAxis("Triggers") * translationSpeed;
 
         submit = Input.GetButtonUp("Submit");
@@ -177,18 +169,14 @@ public class CameraControllerMX : MonoBehaviour {
         rSpeedPers = sliderPR.value;
         tSpeedOrtho = sliderOT.value;
         rSpeedOrtho = sliderOR.value;
-
-
         
-
         Gamepad();
 
         // RESET CAMERA BASED ON CHARACTER HEAD POSITION
-                if (Input.GetKeyDown(KeyCode.R))
-                {
-                    ResetCamera();
-
-                }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            ResetCamera();
+        }
 
         // PERSPECTIVE CAMERA SELECTOR
         if(Input.GetKeyDown(KeyCode.P))
@@ -201,8 +189,6 @@ public class CameraControllerMX : MonoBehaviour {
 
             sliderOT.gameObject.SetActive(false);
             sliderOR.gameObject.SetActive(false);
-
-
         }
 
         // ORTHOGRAPHIC CAMERA SELECTOR
@@ -218,7 +204,7 @@ public class CameraControllerMX : MonoBehaviour {
             sliderPR.gameObject.SetActive(false);
         }
 
-        if(cam.orthographic == true)
+        if (cam.orthographic == true)
         {
             translationSpeed = tSpeedOrtho;
             rotationSpeed = rSpeedOrtho;
@@ -230,22 +216,21 @@ public class CameraControllerMX : MonoBehaviour {
             rotationSpeed = rSpeedPers;
         }
 
-        if(thumbLeftAnalog > 0f && thumbRightAnalog > 0f)
+        if (thumbLeftAnalog > 0f && thumbRightAnalog > 0f)
         {
             ResetCamera();
         }
 
-
         // ORTOGRAPHIC CAMERA CONTROL
-        if(cam.orthographicSize >= 0.1f)
+        if (cam.orthographicSize >= 0.1f)
         {
             cam.orthographicSize += yLeftAnalog * 0.001f * tSpeedOrtho;
         }
-        if(cam.orthographicSize < 0.1f)
+        
+        if (cam.orthographicSize < 0.1f)
         {
             cam.orthographicSize = 0.1f;
         }
-
 
         // TRIGGER CONTROL
         if(triggers > 0 || triggers < 0)
@@ -257,11 +242,7 @@ public class CameraControllerMX : MonoBehaviour {
             toggleVertical = 0f;
         }
 
-
-        
-
         //CAMERA ROTATION
-
 
         //YAW
         if (xRightAnalog > 0.5f || xRightAnalog < -0.5f)
@@ -275,14 +256,11 @@ public class CameraControllerMX : MonoBehaviour {
             transform.eulerAngles += new Vector3(0f, 0f, 0f) * Time.deltaTime;
         }
 
-        
-
          //PITCH
         if (yRightAnalog > 0.5f || yRightAnalog < -0.5f)
         {
             //transform.eulerAngles += new Vector3(-yRightAnalog * rotationSpeed, 0f, 0f) * Time.deltaTime;
             transform.RotateAround(headPosition.position, Vector3.right, yRightAnalog * rotationSpeed * Time.deltaTime);
-
         }
         else
         {
@@ -291,19 +269,17 @@ public class CameraControllerMX : MonoBehaviour {
 
 
         //ROLL
-        if(leftBumpers)
+        if (leftBumpers)
         {
             transform.RotateAround(headPosition.position, Vector3.forward, -rotationSpeed * Time.deltaTime);
         }
-        if(rightBumpers)
+        
+        if (rightBumpers)
         {
             transform.RotateAround(headPosition.position, Vector3.forward, rotationSpeed * Time.deltaTime);
         }
 
         //CAMERA TRANSLATION
-
-
-
         if (xLeftAnalog > 0.5f || xLeftAnalog < -0.5f || triggers != 0)
         {
             Vector3 moveDirection = new Vector3(xLeftAnalog * translationSpeed, toggleVertical, 0f) * 0.01f * Time.deltaTime;
@@ -312,7 +288,6 @@ public class CameraControllerMX : MonoBehaviour {
             rb.MovePosition(transform.position + moveDirection);
         }
 
-
         if ((yLeftAnalog > 0.5f || yLeftAnalog < -0.5f || triggers != 0) && cam.orthographicSize > 0.1f)
         {
             Vector3 moveDirection = new Vector3(0f, toggleVertical, -yLeftAnalog * translationSpeed) * Time.deltaTime;
@@ -320,19 +295,14 @@ public class CameraControllerMX : MonoBehaviour {
 
             rb.MovePosition(transform.position + moveDirection);
         }
-
-
         else
         {
             Vector3 moveDirection = Vector3.zero;
         }
 
-
-
         // Simple Keyboard Shortcut Camera Control
 
         ///Vertical Pan
-        
         if (verticalPanUp || (Input.GetKey(KeyCode.UpArrow) && !Input.GetKey(KeyCode.RightControl)))
         {
             Vector3 moveDirection = new Vector3(0f, 1f, 0f) * Time.deltaTime;
@@ -340,9 +310,7 @@ public class CameraControllerMX : MonoBehaviour {
 
             rb.MovePosition(transform.position + moveDirection);
         }
-
         else if (verticalPanDown || (Input.GetKey(KeyCode.DownArrow) && !Input.GetKey(KeyCode.RightControl)))
-
         {
             Vector3 moveDirection = new Vector3(0f, -1f, 0f) * Time.deltaTime;
             moveDirection = transform.TransformDirection(moveDirection);
@@ -350,20 +318,15 @@ public class CameraControllerMX : MonoBehaviour {
             rb.MovePosition(transform.position + moveDirection);
         }
        
-
         ///Zoom
-
         if (zoomOut || (Input.GetKey(KeyCode.UpArrow) && Input.GetKey(KeyCode.RightControl) && cam.orthographic == true))
         {
             cam.orthographicSize += 0.01f;
         }
-
         else if (zoomIn || (Input.GetKey(KeyCode.DownArrow) && Input.GetKey(KeyCode.RightControl) && cam.orthographic == true))
-
         {
             cam.orthographicSize -= 0.01f;
         }
-
 
         if (zoomOut || (Input.GetKey(KeyCode.UpArrow) && Input.GetKey(KeyCode.RightControl) && cam.orthographic == false))
         {
@@ -372,9 +335,7 @@ public class CameraControllerMX : MonoBehaviour {
 
             rb.MovePosition(transform.position + moveDirection);
         }
-
         else if (zoomIn || (Input.GetKey(KeyCode.DownArrow) && Input.GetKey(KeyCode.RightControl) && cam.orthographic == false))
-
         {
             Vector3 moveDirection = new Vector3(0f, 0f, -1f) * Time.deltaTime;
             moveDirection = transform.TransformDirection(moveDirection);
@@ -382,11 +343,7 @@ public class CameraControllerMX : MonoBehaviour {
             rb.MovePosition(transform.position + moveDirection);
         }
 
-
-
-
         // Green Screen toggler
-
         IEnumerator WaitToColor()
         {
             cam.backgroundColor = Color.black;
@@ -406,7 +363,6 @@ public class CameraControllerMX : MonoBehaviour {
 
         // Rotate background color green -> white -> black -> white
         if (Input.GetKeyUp(KeyCode.Space))
-
         {
             green = !green;
             if (green)
@@ -427,35 +383,15 @@ public class CameraControllerMX : MonoBehaviour {
                     
                     cam.backgroundColor = new Color(0f, 0f, 0f); // black
                     white = !white;
-                }
-                
-                
-
-
-                
+                }  
             }
-
         }
 
         //AUDIO CUE - flash the screen black for start audio sync
         if (Input.GetKey(KeyCode.S))
         {
-
             if (audioCue)
                 StartCoroutine(WaitToColor());
-
-
         }
-
-
     }
-
-
-
-
-
-
-
-
-
 }

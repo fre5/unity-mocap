@@ -10,11 +10,7 @@ public class VRParenter : MonoBehaviour
     public Vector3 head;            //head transform controller
     public Vector3 leftHand;        //left hand transform controller
     public Vector3 rightHand;       //right hand transform controller
-
-
-
     private CharacterController charControl;
-
     private CharacterControllerVR charControlVR;
 
     private void Start()
@@ -23,15 +19,11 @@ public class VRParenter : MonoBehaviour
         charControlVR = GetComponent<CharacterControllerVR>();
     }
 
-
     private void Update()
     {
         headref.transform.position = head;
         leftHandref.transform.position = leftHand;
         rightHandref.transform.position = rightHand;
-
-        
-
 
         if(Input.GetKeyUp(KeyCode.I))       // I keypress will toggle control 
         {

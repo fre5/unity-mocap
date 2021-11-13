@@ -94,8 +94,6 @@ public class CameraControllerMX : MonoBehaviour {
     public Slider sliderOR;
     public Slider verticalTranslation;
 
-
-
     //THE BIG OL' START
     void Start()
     {
@@ -114,14 +112,12 @@ public class CameraControllerMX : MonoBehaviour {
         
         if (cam.orthographic == false)
         {
-            
             translationSpeed = tSpeedPers;
             rotationSpeed = rSpeedPers;
         }
 
         if (portraitMode) //  ONLY USE FOR BUILDING A PORTRAIT ORIENTED BUILD
-        {
-            
+        {   
             if(resolution4k) { Screen.SetResolution(2160, 3840, true); }
             else { Screen.SetResolution(1080, 1920, true); }
 
@@ -155,7 +151,6 @@ public class CameraControllerMX : MonoBehaviour {
         cancel = Input.GetButtonUp("Cancel");
     }
 
-
     public void ResetCamera() //resets camera position to character's head
     {
         transform.position = headPosition.position;
@@ -163,8 +158,8 @@ public class CameraControllerMX : MonoBehaviour {
         cam.orthographicSize = initOrthographicSize;
     }
 
-    void Update() {
-
+    void Update() 
+    {
         tSpeedPers = sliderPT.value;
         rSpeedPers = sliderPR.value;
         tSpeedOrtho = sliderOT.value;
